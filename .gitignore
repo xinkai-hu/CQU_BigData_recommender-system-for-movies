@@ -1,0 +1,15 @@
+# 由于文件较大，因此不提供数据集和训练好的模型。
+
+bin/*
+dataset/CHN_MNIST/*
+dataset/ml-1m/*
+dataset/ml-10M100K/*
+dataset/ml-100k/*
+doc/course_report/*
+include/*
+lib
+lib64
+pyvenv.cfg
+saved_model/*
+share
+*.txt

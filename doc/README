@@ -1,0 +1,66 @@
+本项目为重庆大学 2023-2024 学年第一学期大数据架构与技术 CST31214 课程期末报告源代码及部分课程报告。
+
+
+作者：胡欣凯、陈泽超、刘秋言、荣召康；任课教师：冯永
+
+
+以下为项目结构介绍。
+
+./dataset/
+    目录下包含用于项目的 3 个 MovieLens 数据集以及用于测试的中文手写数字数据集。
+
+./doc/
+    目录下包含项目介绍与课程报告。
+
+./jars/
+    目录下为 Neo4j Connector for Apache Spark，用于连接图数据库和 Spark，通过 SparkSession 的 spark.jars 参数导入。
+
+./saved_model/
+    目录下包含我们训练好的几个 LightGCN 模型（很遗憾没有记录下来模型的超参数），可在推荐部分直接使用。
+
+./src/
+    目录下为主要源程序。所有源程序文件顶部均有注释说明代码的功能和注意事项，运行代码前请阅读相关注释。
+./src/als/
+    目录下实现 ALS 算法。
+./src/cold_strategy/
+    目录下实现冷启动策略。
+./src/crawler/
+    目录下实现网络爬虫，用于从 RottenPotatoes 网站爬取电影评分数据（爬虫得到的数据规模较小，因此程序仍基于 MovieLens 系列数据集完成）。
+./src/csv/
+    目录下实现 LightGCN 离线推荐模型。
+./src/cypher/
+    目录下包含将 csv 文件导入 Neo4j 图数据库的 Cypher 语句和清空推荐结果的 Cypher 语句。
+./src/distributed/
+    目录下包含基于 horovod 实现的 LightGCN 模型训练代码。horovod 是分布式深度学习框架，通过 horovod 能够在 DataFrame 上直接完成神经网络模型的训练，理论上能够实现完全分布式模型训练。但是分布式模型训练难以调节超参数，且模型训练效果比单机训练效果差。
+./src/streaming/
+    目录下实现实时推荐算法。使用前需要将 LightGCN 训练得到的参数写入 Neo4j 图数据库。相关代码位于 ./src/csv/train_topn.py 的第 160 至 162 行。
+
+./test/
+    目录下为用于测试环境安装是否正确的代码（不是很重要）。
+./test/horovod_test.py
+    实现了基于 horovod 的中文手写数字分类算例。
+./test/neo4j_test.py
+    测试了图数据库的连接和数据读写。
+./test/streaming_test.py
+    实现了与 Spark Structured Streaming 相关的流式计算词频统计和句子打乱算例。
+
+
+以下为数据集来源。
+
+CHN_MNIST
+    中文手写数字数据集。来自重庆大学大数据架构与技术课程实验 3。
+    https://github.com/Wanghui-Huang/CQU_bigdata/blob/master/Experiment/Ex3/Ex3_CHN/RawDataset.zip
+
+ml-1m
+    https://files.grouplens.org/datasets/movielens/ml-1m.zip
+
+ml-10M100K
+    https://files.grouplens.org/datasets/movielens/ml-10m.zip
+
+ml-100k
+    https://files.grouplens.org/datasets/movielens/ml-100k.zip
+
+
+以下为参考文献。
+
+[1] HE X, DENG K, WANG X, et al. LightGCN: Simplifying and Powering Graph Convolution Network for recommendation[J/OL]. arXiv (Cornell University), 2020. http://arxiv.org/abs/2002.02126.
